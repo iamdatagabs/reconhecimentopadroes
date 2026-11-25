@@ -50,11 +50,9 @@ A implementação utiliza Python, TensorFlow/Keras, NumPy, Matplotlib e Pillow. 
 
 ## 5. Dados e execução
 
-O notebook foi originalmente preparado para execução no **Google Colab** e faz referência à base de imagens **Fruits-360**. A versão atual do código espera encontrar os dados em um diretório do Google Drive:
+O notebook foi preparado para execução no **Google Colab**, mas também pode ser utilizado em Jupyter/local. Ele utiliza a base de imagens **Fruits-360**, que não está armazenada neste repositório.
 
-`/content/drive/MyDrive/data/fruits-360/Training`
-
-Esse é o valor inicial de `BASE_DIR` no notebook. Ajuste-o conforme a localização da pasta `Training` no seu Google Drive. A base de imagens não está armazenada neste repositório.
+No Colab, o caminho inicial é `/content/drive/MyDrive/data/fruits-360/Training`. Em outro ambiente, configure a variável de ambiente `FRUITS360_TRAINING_DIR` com o caminho da pasta `Training` ou ajuste `BASE_DIR` diretamente no notebook.
 
 ### Para reproduzir o experimento
 
@@ -62,9 +60,10 @@ Esse é o valor inicial de `BASE_DIR` no notebook. Ajuste-o conforme a localiza�
 2. Disponibilize a base Fruits-360 e confira a organização das pastas por categoria;
 3. Atualize `BASE_DIR` na seção de configuração;
 4. Confira `SAMPLES_PER_CLASS`, `TRAIN_CLASS_FRACTION`, `BATCH_SIZE`, `EPOCHS` e `N_WAY`;
-5. Execute as células em sequência e registre versões das bibliotecas, configurações e resultados obtidos.
+5. Execute as células em sequência; o notebook interrompe a execução antecipadamente se não houver categorias suficientes para a avaliação N-way;
+6. Registre versões das bibliotecas, configurações, sementes, hardware e resultados obtidos.
 
-> **Nota de reprodutibilidade:** o notebook contém uma referência de caminho local do Google Drive e registros de execução que podem refletir o ambiente original. Portanto, a execução em outro ambiente depende da configuração dos dados e das dependências. Os resultados devem ser interpretados como parte de um exercício acadêmico, e não como evidência de desempenho validado para uso em produção.
+**Nota de reprodutibilidade:** as células de saída não são distribuídas como resultados oficiais do experimento. A execução em outro ambiente depende da configuração dos dados, das dependências e dos recursos computacionais. Os resultados obtidos devem ser registrados pelo executor e interpretados como parte de um exercício acadêmico, não como evidência de desempenho validado para uso em produção.
 
 ## 6. Escopo e limitações
 
