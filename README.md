@@ -1,7 +1,9 @@
 # Reconhecimento de Padrões
 ## Estudo acadêmico de redes siamesas com transferência de aprendizado
 
-Repositório dedicado ao registro de uma atividade desenvolvida no contexto da disciplina de **Reconhecimento de Padrões**. O trabalho explora uma abordagem de aprendizado profundo para comparar imagens e aprender relações de similaridade entre amostras.
+Repositório dedicado ao registro de uma atividade desenvolvida no contexto da disciplina de **Reconhecimento de Padrões**. O trabalho explora redes siamesas para comparar imagens e aprender relações de similaridade entre amostras.
+
+[![Abrir no Google Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/iamdatagabs/reconhecimentopadroes/blob/main/SiameseComRedePreTreinada.ipynb)
 
 O material está organizado em um notebook experimental, com foco didático e acadêmico. Seu objetivo é documentar o processo de implementação, explicitar as escolhas metodológicas e facilitar a leitura e a reprodução dos experimentos.
 
@@ -33,37 +35,39 @@ Implementar e explorar uma rede siamesa aplicada à comparação de imagens, obs
 
 ## 4. Abordagem metodológica
 
-O notebook apresenta um fluxo experimental que inclui:
+O notebook foi reorganizado como um roteiro acadêmico com as seguintes etapas:
 
-1. **Preparação das imagens:** leitura dos arquivos, conversão para RGB, redimensionamento e normalização dos pixels;
-2. **Organização das categorias:** associação de rótulos às imagens e seleção de amostras por classe;
-3. **Construção de pares:** geração de pares positivos (mesma categoria) e negativos (categorias distintas);
-4. **Aprendizado de similaridade:** treinamento de uma arquitetura siamesa para comparar as representações das imagens;
-5. **Análise experimental:** inspeção das saídas e dos resultados produzidos durante a execução.
+1. **Preparação das imagens:** leitura, conversão para RGB e redimensionamento para 224 × 224;
+2. **Separação por categoria:** classes de treinamento e avaliação são disjuntas;
+3. **Construção de pares:** geração balanceada de pares positivos (mesma categoria) e negativos (categorias distintas);
+4. **Codificação compartilhada:** VGG16 pré-treinado no ImageNet, sem as camadas de classificação originais e com backbone congelado;
+5. **Comparação:** diferença absoluta entre embeddings e saída sigmoide para estimar similaridade;
+6. **Treinamento:** lotes amostrados sob demanda e entropia cruzada binária;
+7. **Avaliação:** tarefa N-way one-shot em categorias reservadas, com visualização das curvas de treinamento.
 
-A implementação utiliza Python e bibliotecas do ecossistema científico e de aprendizado profundo, incluindo TensorFlow/Keras, NumPy, Matplotlib e Pillow.
+A implementação utiliza Python, TensorFlow/Keras, NumPy, Matplotlib e Pillow. O pré-processamento do VGG16 segue a especificação oficial: conversão RGB para BGR e centralização por canal, sem divisão por 255 ([documentação TensorFlow](https://www.tensorflow.org/api_docs/python/tf/keras/applications/vgg16/preprocess_input)).
 
 ## 5. Dados e execução
 
 O notebook foi originalmente preparado para execução no **Google Colab** e faz referência à base de imagens **Fruits-360**. A versão atual do código espera encontrar os dados em um diretório do Google Drive:
 
-`/content/drive/My Drive/data/fruits-360/Training/`
+`/content/drive/MyDrive/data/fruits-360/Training`
 
-Esse caminho é específico do ambiente original e precisa ser ajustado para a estrutura de diretórios disponível na execução. A base de imagens não está armazenada neste repositório.
+Esse é o valor inicial de `BASE_DIR` no notebook. Ajuste-o conforme a localização da pasta `Training` no seu Google Drive. A base de imagens não está armazenada neste repositório.
 
 ### Para reproduzir o experimento
 
 1. Abra o notebook no Google Colab ou em um ambiente Jupyter com suporte às dependências;
 2. Disponibilize a base Fruits-360 e confira a organização das pastas por categoria;
-3. Atualize o caminho da variável `base_dir` para o local em que os dados foram armazenados;
-4. Instale/configure as bibliotecas necessárias e execute as células em sequência;
-5. Registre versões das bibliotecas, configurações experimentais e resultados obtidos.
+3. Atualize `BASE_DIR` na seção de configuração;
+4. Confira `SAMPLES_PER_CLASS`, `TRAIN_CLASS_FRACTION`, `BATCH_SIZE`, `EPOCHS` e `N_WAY`;
+5. Execute as células em sequência e registre versões das bibliotecas, configurações e resultados obtidos.
 
 > **Nota de reprodutibilidade:** o notebook contém uma referência de caminho local do Google Drive e registros de execução que podem refletir o ambiente original. Portanto, a execução em outro ambiente depende da configuração dos dados e das dependências. Os resultados devem ser interpretados como parte de um exercício acadêmico, e não como evidência de desempenho validado para uso em produção.
 
 ## 6. Escopo e limitações
 
-Este repositório documenta um exercício de natureza didática. A implementação permite estudar conceitos de aprendizado de similaridade e redes siamesas, mas não deve ser interpretada como uma avaliação sistemática ou benchmark. Para uma análise experimental mais robusta, seriam necessários, entre outros cuidados:
+Este repositório documenta um exercício de natureza didática. A implementação permite estudar conceitos de aprendizado de similaridade e redes siamesas, mas não deve ser interpretada como benchmark. A avaliação por categorias reservadas é uma escolha didática e não substitui validação independente de hiperparâmetros. Para uma análise experimental mais robusta, seriam necessários, entre outros cuidados:
 
 - Separação dos dados em conjuntos de treinamento, validação e teste sem vazamento de informação;
 - Controle de aleatoriedade e documentação das sementes utilizadas;
